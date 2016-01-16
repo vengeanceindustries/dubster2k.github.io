@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,12 +18,64 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  <style>
+  #mapd { height: 180px; }
+  </style>
   <body>
-    <h1>map goes here</h1>
+    <h1>map goes here 2</h1>
+     <div id="map" style="width: 500px; height: 500px"></div>
+     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
+     <script>
+
+		var map = L.map('map', {
+        maxZoom: 24,
+        minZoom: 1,
+        crs: L.CRS.Simple
+    }).setView([0, 0], 1);
+
+    map.setMaxBounds(new L.LatLngBounds([0,500], [500,0]));
+
+    var imageUrl = 'SmallVersionChicagoArtistGroupPortrait5mb.jpg'
+    var imageBounds = [[250,0], [0,250]];
+
+    L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+
+		L.marker([100, 33]).addTo(map)
+			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+		L.circle([51.508, 12], 500, {
+			color: 'red',
+			fillColor: '#f03',
+			fillOpacity: 0.5
+		}).addTo(map).bindPopup("I am a circle.");
+
+		L.polygon([
+			[52, 40],
+			[57, 39],
+			[50, 39]
+		]).addTo(map).bindPopup("I am a polygon.");
+
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent("You clicked the map at " + e.latlng.toString())
+				.openOn(map);
+		}
+
+		map.on('click', onMapClick);
+
+	</script>
+
+     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+    
   </body>
 </html>
