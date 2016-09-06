@@ -1605,7 +1605,9 @@ var participants = [
   },
   {
       "id": 395,
-      "value": "Cole Pierce"
+      "value": "Cole Pierce",
+      "lat": -71.5625,
+      "lon": -71
   },
   {
       "id": 396,
