@@ -39,7 +39,10 @@
     <p>About the photo on  <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
     About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
     This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
-    The source is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a></p>
+    The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br>
+    A spread sheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (latitude and longitude) <br></p>
+    <p> To get the coordinates of a place in the photo click on it</p>
+    <p>
   </div>
 </div>
 </div>
@@ -101,7 +104,7 @@
 		function onMapClick(e) {
 			popup
 				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
+				.setContent("The coorinates are" + e.latlng.toString())
 				.openOn(map);
 		}
 
