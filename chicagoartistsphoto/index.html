@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Chicago artists portrait</title>
+    <title>A map of Chicago Artists Portrait</title>
 
     <!-- Bootstrap -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -36,16 +36,30 @@
   <div class="col-md-6"><div id="map" style="width: 500px; height: 500px"></div></div>
   <div class="col-md-6">
     <p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p>
-    <p id=listParticipants></p>
+    <p>About the photo on  <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
+    About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
+    This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
+    The source is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a></p>
   </div>
 </div>
 </div>
+<div class="container">
+  <div class="row">
+<div class="col-md-6"><b>On the Map</b><p id=listParticipantsDone></p></div>
+<div class="col-md-6"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
+
+
+</div>
+</div>
+
 
 
 
      <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
      <script>
+    var participantsDone=" ";
+    var participantsMissing=" ";
     var showLon=0;
     var showLat=0;
 		var map = L.map('map', {
@@ -53,13 +67,6 @@
         //minZoom: 1
         crs: L.CRS.Simple
     }).setView([-80, 110], 2);
-//var map = L.map('map').setView([0, 0], 2);
-    //map.setMaxBounds(new L.LatLngBounds([0,500], [500,0]));
-
-  //  var imageUrl = 'SmallVersionChicagoArtistGroupPortrait5mb.jpg'
-    //var imageBounds = [[250,0], [0,250]];
-
-    //L.imageOverlay(imageUrl, imageBounds).addTo(map);
     L.tileLayer('tiles/{z}-{x}-{y}.jpg', {
         minZoom: 0,
         maxZoom: 5,
@@ -67,10 +74,6 @@
         tms: false,
         continuousWorld:true
     }).addTo(map);
-
-		//L.marker([100, 33]).addTo(map)
-
-			//.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
 
   for (var i = 0, len = participants.length; i < len; i++) {
 
@@ -82,6 +85,10 @@
       [(participants[i].lat-0.5), (participants[i].lon-0.5)],
       [(participants[i].lat-0.5), (participants[i].lon+0.5)]
     ]).addTo(map).bindPopup(participants[i].value);
+    participantsDone=participantsDone+" "+participants[i].value;
+    }
+    else {
+      {participantsMissing=participantsMissing+" "+participants[i].value;}
     }
   }
 
@@ -89,19 +96,7 @@
 
 		var popup = L.popup();
 
-  /*  L.geoJson(participants, {
 
-			filter: function (feature, layer) {
-				if (feature.properties) {
-					// If the property "underConstruction" exists and is true, return false (don't render features under construction)
-					return feature.properties.underConstruction !== undefined ? !feature.properties.underConstruction : true;
-				}
-				return false;
-			},
-
-			onEachFeature: onEachFeature
-		}).addTo(map);
-*/
 
 		function onMapClick(e) {
 			popup
@@ -129,7 +124,8 @@
     <script>
 $(function() {
 
-
+  $("#listParticipantsDone").html(participantsDone);
+  $("#listParticipantsMissing").html(participantsMissing);
   $( "#tags" ).autocomplete({
   source: participants,
   focus: function( event, ui ) {
