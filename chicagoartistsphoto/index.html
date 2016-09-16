@@ -22,21 +22,35 @@
     <![endif]-->
   </head>
   <style>
-  #mapd { height: 180px; }
+  .header {}
+  .inMap {color:#000000;}
+  .offMap {color:#666;}
+  .info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
   </style>
   <body>
     <div class="blog-masthead">
           <div class="container">
-            <h1>A Map of Chicago Artists Group Portrait</h1>
-            <h1>Photo by Jason Lazarus</h1>
+            <h1>A Map of 2015 Chicago Artists Group Portrait</h1>
+
           </div>
-        </div>
+   </div>
   <div class="container">
     <div class="row">
-  <div class="col-md-6"><div id="map" style="width: 500px; height: 500px"></div></div>
+  <div class="col-md-6"><div id="map" style="width: 500px; height: 350px"></div></div>
   <div class="col-md-6">
     <p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p>
-    <p>About the photo on  <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
+    <p>About the photo on <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
     About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
     This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
     The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br>
@@ -65,18 +79,35 @@
     var participantsMissing=" ";
     var showLon=0;
     var showLat=0;
-		var map = L.map('map', {
-       //maxZoom: 5,
-        //minZoom: 1
+    var faces = new L.LayerGroup();
+    var popup = L.popup();
+    var map = L.map('map', {
+
         crs: L.CRS.Simple
     }).setView([-80, 110], 2);
     L.tileLayer('tiles/{z}-{x}-{y}.jpg', {
         minZoom: 0,
         maxZoom: 5,
-        //attribution: 'ESO/INAF-VST/OmegaCAM',
+        layers: [faces],
         tms: false,
         continuousWorld:true
     }).addTo(map);
+    map.on('click', onMapClick);
+    var info = L.control();
+
+    		info.onAdd = function (map) {
+    			this._div = L.DomUtil.create('div', 'info');
+    			this.update();
+    			return this._div;
+    		};
+
+    		info.update = function (pname) {
+
+    			this._div.innerHTML = ( pname ? '<h2>'+pname+'</h2>':'<h2>Click on a square</h2>') ;
+    		};
+
+    		info.addTo(map);
+
 
   for (var i = 0, len = participants.length; i < len; i++) {
 
@@ -87,34 +118,70 @@
       [(participants[i].lat+0.5), (participants[i].lon-0.5)],
       [(participants[i].lat-0.5), (participants[i].lon-0.5)],
       [(participants[i].lat-0.5), (participants[i].lon+0.5)]
-    ]).addTo(map).bindPopup(participants[i].value);
-    participantsDone=participantsDone+" "+participants[i].value;
+    ],{
+      weight: 2,
+			color: 'black',
+			fillColor: '#fff',
+			fillOpacity: 0.05,
+      alt:i
+
+		}).addTo(faces).on("click", function(e)
+  {getInfo(e.target.options.alt)} );//.bindPopup(participants[i].value);
     }
-    else {
-      {participantsMissing=participantsMissing+" "+participants[i].value;}
-    }
+
   }
+faces.addTo(map);
 
 
 
-		var popup = L.popup();
 
 
+var overlays = {
+      "Show markers": faces
+};
+
+
+  L.control.layers(null,overlays).setPosition('topright').addTo(map);
+
+
+
+
+    function onFaceClick(e) {
+      popup
+        .setLatLng(e.latlng)
+        .setContent("face" + e.latlng.toString())
+        .openOn(map);
+    }
 
 		function onMapClick(e) {
+      var coorinatesString="latitude = "+ e.latlng.lat.toFixed(4)+", longtitude = "+ e.latlng.lng.toFixed(4);
+      //coorinatesString=.toFixed(2);
+      //console.log(e);
 			popup
 				.setLatLng(e.latlng)
-				.setContent("The coorinates are" + e.latlng.toString())
+				.setContent(coorinatesString)
 				.openOn(map);
 		}
 
-		map.on('click', onMapClick);
+
+    function setAndShow(myLat,myLon)
+    {
+      showLat= myLat ;
+      showLon= myLon ;
+      showLatLon();
+    }
     function showLatLon()
     {
-      map.panTo(L.latLng(showLat,showLon ));
-      map.setZoom(5);
+      map.setView(L.latLng(showLat,showLon ), 5, {animation: true});
     }
-
+    function getInfo(arrayPosition)
+  {
+    //alert(event);
+    showLat= participants[arrayPosition].lat ;
+    showLon= participants[arrayPosition].lon ;
+    info.update(participants[arrayPosition].value)
+    showLatLon();
+  }
 
 	</script>
 
@@ -127,8 +194,28 @@
     <script>
 $(function() {
 
-  $("#listParticipantsDone").html(participantsDone);
-  $("#listParticipantsMissing").html(participantsMissing);
+
+for (var i = 0, len = participants.length; i < len; i++) {
+
+  if  (participants[i].lat != null)
+  {
+    $( "<button></button>", {
+      "class": "inMap","arrayPosition":i,
+      on: {
+        click: function( event ) {
+          getInfo($(this).attr("arrayPosition"));
+    }
+  }
+}).text(participants[i].value).appendTo( "#listParticipantsDone" );
+  }
+  else {
+    $( "<span></span>", {
+      "class": "offMap","arrayPosition":i,
+}).text(participants[i].value+"  ").appendTo( "#listParticipantsMissing" );
+  }
+}
+
+
   $( "#tags" ).autocomplete({
   source: participants,
   focus: function( event, ui ) {
@@ -136,8 +223,9 @@ $(function() {
     showLon= ui.item.lon ;
   },
   select: function( event, ui ) {
-    showLat= ui.item.lat ;
-    showLon= ui.item.lon ;
+    getInfo(ui.item.id)
+    //showLat= ui.item.lat ;
+    //showLon= ui.item.lon ;
   }
 });
 
