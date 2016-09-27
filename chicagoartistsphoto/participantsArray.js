@@ -509,7 +509,8 @@ var participants =[
         "id": 123,
         "value": "Ray Doeksen",
         "lat": -84.8125,
-        "lon": 101.875
+        "lon": 101.875,
+        "url": "http://www.Doeksen.com"
     },
     {
         "id": 124,
@@ -1119,7 +1120,8 @@ var participants =[
         "id": 274,
         "value": "Dubi Kaufmann",
         "lat": -67.8125,
-        "lon": 95.34375
+        "lon": 95.34375,
+        "url": "http://www.dubster.com"
     },
     {
         "id": 275,
@@ -2020,7 +2022,9 @@ var participants =[
     },
     {
         "id": 495,
-        "value": "Lorelei Stewart"
+        "value": "Lorelei Stewart",
+        "lat": -82.75,
+        "lon": 59.1875
     },
     {
         "id": 496,
