@@ -39,17 +39,21 @@
 		}
   </style>
   <body>
-    <div class="blog-masthead">
-          <div class="container">
-            <h1>A Map of 2015 Chicago Artists Group Portrait</h1>
 
-          </div>
-   </div>
+   <nav class="navbar navbar-inverse">
+     <div class="container">
+         <div class="navbar-header">
+
+             <h2 class="navbar-brand">A Map of 2015 Chicago Artists Group Portrait</h2>
+         </div>
+
+       </div><!--/.container -->
+   </nav>
   <div class="container">
     <div class="row">
   <div class="col-md-6"><div id="map" style="width: 500px; height: 350px"></div></div>
   <div class="col-md-6">
-    <p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p>
+
     <p>About the photo on <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
     About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
     This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
@@ -62,8 +66,9 @@
 </div>
 <div class="container">
   <div class="row">
-<div class="col-md-6"><b>On the Map</b><p id=listParticipantsDone></p></div>
-<div class="col-md-6"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
+<div class="col-md-5"><b>On the Map</b><p id=listParticipantsDone></p></div>
+<div class="col-md-3"><p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p></div>
+<div class="col-md-4"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
 
 
 </div>
@@ -101,9 +106,17 @@
     			return this._div;
     		};
 
-    		info.update = function (pname) {
-
-    			this._div.innerHTML = ( pname ? '<h2>'+pname+'</h2>':'<h2>Click on a square</h2>') ;
+    		info.update = function (aPosition) {
+          var infoString='<h2>Click on a square</h2>';
+          if (aPosition)
+          {
+            infoString='<h2>'+participants[aPosition].value+'</h2>';
+            if (participants[aPosition].url)
+            {
+              infoString=infoString+'<br><a href="'+participants[aPosition].url+'">'+participants[aPosition].url+'</a>'
+            }
+          }
+    			this._div.innerHTML = infoString ;
     		};
 
     		info.addTo(map);
@@ -179,7 +192,7 @@ var overlays = {
     //alert(event);
     showLat= participants[arrayPosition].lat ;
     showLon= participants[arrayPosition].lon ;
-    info.update(participants[arrayPosition].value)
+    info.update(arrayPosition)
     showLatLon();
   }
 
