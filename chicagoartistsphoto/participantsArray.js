@@ -11,7 +11,9 @@ var participants =[
     },
     {
         "id": 2,
-        "value": "Saúl Aguirre"
+        "value": "Saúl Aguirre",
+        "lat": -93.1875,
+        "lon": 141.5781
     },
     {
         "id": 3,
@@ -197,7 +199,9 @@ var participants =[
     },
     {
         "id": 47,
-        "value": "Deborah Boardman"
+        "value": "Deborah Boardman",
+        "lat": -71.9375,
+        "lon": 160.0469
     },
     {
         "id": 48,
@@ -353,7 +357,9 @@ var participants =[
     },
     {
         "id": 85,
-        "value": "Diane Christiansen"
+        "value": "Diane Christiansen",
+        "lat": -87.2188,
+        "lon": 141.7344
     },
     {
         "id": 86,
@@ -552,7 +558,9 @@ var participants =[
     },
     {
         "id": 133,
-        "value": "Ken Ellis"
+        "value": "Ken Ellis",
+        "lat": -71.5938,
+        "lon": 96.7969
     },
     {
         "id": 134,
@@ -894,7 +902,9 @@ var participants =[
     },
     {
         "id": 218,
-        "value": "Julia Haw"
+        "value": "Julia Haw",
+        "lat": -77.2188,
+        "lon": 174.5
     },
     {
         "id": 219,
@@ -1102,7 +1112,9 @@ var participants =[
     },
     {
         "id": 270,
-        "value": "Vesna Jovanovic"
+        "value": "Vesna Jovanovic",
+        "lat": -84,
+        "lon": 163.4219
     },
     {
         "id": 271,
@@ -1165,7 +1177,9 @@ var participants =[
     },
     {
         "id": 285,
-        "value": "Barbara Koenen"
+        "value": "Barbara Koenen",
+        "lat": -100.8125,
+        "lon": 198.1719
     },
     {
         "id": 286,
@@ -1207,7 +1221,9 @@ var participants =[
     },
     {
         "id": 295,
-        "value": "Molly Laemle"
+        "value": "Molly Laemle",
+        "lat": -60.5208,
+        "lon": 70.2917
     },
     {
         "id": 296,
@@ -1307,7 +1323,9 @@ var participants =[
     },
     {
         "id": 319,
-        "value": "Lucy Ping Liu"
+        "value": "Lucy Ping Liu",
+        "lat": -87.5313,
+        "lon": 98.5313
     },
     {
         "id": 320,
@@ -1439,7 +1457,9 @@ var participants =[
     },
     {
         "id": 352,
-        "value": "Robert Metrick"
+        "value": "Robert Metrick",
+        "lat": -71.375,
+        "lon": 79.0313
     },
     {
         "id": 353,
@@ -1683,7 +1703,9 @@ var participants =[
     },
     {
         "id": 412,
-        "value": "Aza Quinn-Braunet"
+        "value": "Aza Quinn-Braunet",
+        "lat": -72.4375,
+        "lon": 85.5469
     },
     {
         "id": 413,
@@ -1775,7 +1797,9 @@ var participants =[
     },
     {
         "id": 435,
-        "value": "Ryan Richey"
+        "value": "Ryan Richey",
+        "lat": -70.5,
+        "lon": 76.22031
     },
     {
         "id": 436,
@@ -2056,7 +2080,9 @@ var participants =[
     },
     {
         "id": 503,
-        "value": "Mark Swindle"
+        "value": "Mark Swindle",
+        "lat": -68,
+        "lon": 87.4063
     },
     {
         "id": 504,
@@ -2371,3 +2397,4 @@ var participants =[
         "notes": "not in the original list"
     }
 ]
+    
