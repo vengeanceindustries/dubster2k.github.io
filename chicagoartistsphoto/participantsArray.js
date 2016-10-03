@@ -1343,7 +1343,9 @@ var participants =[
     },
     {
         "id": 311,
-        "value": "Bert Leveille"
+        "value": "Bert Leveille",
+        "lat": -87.8125,
+        "lon": 32.9063
     },
     {
         "id": 312,
@@ -2484,5 +2486,4 @@ var participants =[
         "lon": 127.8438,
         "notes": "not in the original list"
     }
-   
 ]
