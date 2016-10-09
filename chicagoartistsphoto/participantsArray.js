@@ -147,7 +147,9 @@ var participants =[
     },
     {
         "id": 32,
-        "value": "Lynn Basa"
+        "value": "Lynn Basa",
+        "lat": -85.375,
+        "lon": 166.9063
     },
     {
         "id": 33,
@@ -538,7 +540,9 @@ var participants =[
     },
     {
         "id": 124,
-        "value": "William Dolan"
+        "value": "William Dolan",
+        "lat": -81.0625,
+        "lon": 106.3125
     },
     {
         "id": 125,
@@ -824,7 +828,9 @@ var participants =[
     },
     {
         "id": 192,
-        "value": "Diana Leviton Gondek"
+        "value": "Diana Leviton Gondek",
+        "lat": -73.25,
+        "lon": 137.0938
     },
     {
         "id": 193,
@@ -868,7 +874,9 @@ var participants =[
     },
     {
         "id": 203,
-        "value": "Sarvin Haghighi"
+        "value": "Sarvin Haghighi",
+        "lat": -76.0313,
+        "lon": 142.6563
     },
     {
         "id": 204,
@@ -1080,7 +1088,9 @@ var participants =[
     },
     {
         "id": 252,
-        "value": "Pedro Igrez"
+        "value": "Pedro Igrez",
+        "lat": -72.4459,
+        "lon": 133.6519
     },
     {
         "id": 253,
@@ -1321,11 +1331,15 @@ var participants =[
     },
     {
         "id": 306,
-        "value": "Jina Lee"
+        "value": "Jina Lee",
+        "lat": -82.5313,
+        "lon": 41.9063
     },
     {
         "id": 307,
-        "value": "Min Sun Lee"
+        "value": "Min Sun Lee",
+        "lat": -82.1875,
+        "lon": 39.3438
     },
     {
         "id": 308,
@@ -1821,7 +1835,9 @@ var participants =[
     },
     {
         "id": 425,
-        "value": "Kao Razen"
+        "value": "Kao Razen",
+        "lat": -82.9375,
+        "lon": 52.5938
     },
     {
         "id": 426,
@@ -2259,7 +2275,9 @@ var participants =[
     },
     {
         "id": 527,
-        "value": "Lynn Tsan"
+        "value": "Lynn Tsan",
+        "lat": -68.2833,
+        "lon": 92.0871
     },
     {
         "id": 528,
@@ -2288,7 +2306,9 @@ var participants =[
     },
     {
         "id": 533,
-        "value": "Garry Vettori"
+        "value": "Garry Vettori",
+        "lat": -61.0625,
+        "lon": 72.5156
     },
     {
         "id": 534,
