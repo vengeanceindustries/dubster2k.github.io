@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>A map of Chicago Artists Portrait</title>
+    <title>A Map of Chicago Artists Portrait</title>
 
     <!-- Bootstrap -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,8 @@
   <style>
   .header {}
   .inMap {color:#000000;}
-  .offMap {color:#666;}
+  .offMap {color:#666;display: inline-block;
+  width: 180px;}
   .info {
 			padding: 6px 8px;
 			font: 14px/16px Arial, Helvetica, sans-serif;
@@ -58,20 +59,44 @@
     About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
     This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
     The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br>
-    A spread sheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (latitude and longitude) <br></p>
-    <p> To get the coordinates of a place in the photo click on it.</p>
-    <p>
+    A spreadsheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (write protected)  <br></p>
+    <p> To get the coordinates of a person in the photo click on it on the face and the coordinates will appear in a pop up.</p>
+     <p> Questions comments email dubster2k-AT-yahoo-DOT-com</p>
+	  <p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p>
   </div>
 </div>
 </div>
 <div class="container">
   <div class="row">
-<div class="col-md-5"><b>On the Map</b><p id=listParticipantsDone></p></div>
-<div class="col-md-3"><p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p></div>
-<div class="col-md-4"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
+<div class="col-md-12"><b>On the Map</b><p id=listParticipantsDone></p></div>
+
+
 
 
 </div>
+</div>
+<div class="container">
+  <div class="row">
+
+<div id="tabs">
+  <ul id="tabLinks">
+
+
+  </ul>
+
+
+</div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row">
+
+<div class="col-md-12"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
+
+
+</div>
+
 </div>
 
 
@@ -133,9 +158,9 @@
       [(participants[i].lat-0.5), (participants[i].lon+0.5)]
     ],{
       weight: 2,
-			color: 'black',
-			fillColor: '#fff',
-			fillOpacity: 0.05,
+			color: '#f00',
+			fillColor: null,
+			fillOpacity:0,
       alt:i
 
 		}).addTo(faces).on("click", function(e)
@@ -207,19 +232,33 @@ var overlays = {
     <script>
 $(function() {
 
+for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
+  var tabLetter=String.fromCharCode(65+abcIndex);
+ $("<li></li>").html('<a href="#tabs-'+tabLetter+'">'+tabLetter+'</a>').appendTo("#tabLinks");
 
+  $( "<div></div>", {
+    "id": "tabs-"+tabLetter}).appendTo("#tabs");
+  }
+
+
+ $( "#tabs" ).tabs();
 for (var i = 0, len = participants.length; i < len; i++) {
 
   if  (participants[i].lat != null)
   {
-    $( "<button></button>", {
+    mybutton=$( "<button></button>", {
       "class": "inMap","arrayPosition":i,
       on: {
         click: function( event ) {
           getInfo($(this).attr("arrayPosition"));
+            }
+          }
+}).text(participants[i].value);
+  myLetter=(participants[i].value).toUpperCase().charAt(0)
+    if ((myLetter.charCodeAt(0)>64)&&(myLetter.charCodeAt(0)<91))
+    {
+      mybutton.appendTo( "#tabs-"+myLetter);
     }
-  }
-}).text(participants[i].value).appendTo( "#listParticipantsDone" );
   }
   else {
     $( "<span></span>", {
