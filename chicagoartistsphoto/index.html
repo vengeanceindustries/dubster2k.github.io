@@ -234,7 +234,7 @@ $(function() {
 
 for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
   var tabLetter=String.fromCharCode(65+abcIndex);
- $("<li></li>").html('<a href="#tabs-'+tabLetter+'">'+tabLetter+'</a>').appendTo("#tabLinks");
+ $("<li></li>", {"id": "labelTab-"+tabLetter}).html('<a href="#tabs-'+tabLetter+'">'+tabLetter+'</a>').appendTo("#tabLinks");
 
   $( "<div></div>", {
     "id": "tabs-"+tabLetter}).appendTo("#tabs");
@@ -267,6 +267,18 @@ for (var i = 0, len = participants.length; i < len; i++) {
   }
 }
 
+for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
+  var tabLetter=String.fromCharCode(65+abcIndex);
+  temp=$("#tabs-"+tabLetter).html();
+  if (temp=="") {
+      console.log(tabLetter);
+      $("#tabs-"+tabLetter).remove();
+      $( "#labelTab-"+tabLetter).remove();
+      
+    }
+  }
+
+$( "#tabs" ).tabs( "refresh" );
 
   $( "#tags" ).autocomplete({
   source: participants,
