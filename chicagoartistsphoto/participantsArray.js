@@ -2546,9 +2546,5 @@ var participants =
         "lat": -77.4688,
         "lon": 127.8438,
         "notes": "not in the original list"
-    },
-    {
-        "id": " ",
-        "value": " "
     }
 ]
