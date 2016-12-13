@@ -1,131 +1,160 @@
-var participants =[
+var participants =
+    [
     {
         "id": 0,
         "value": "Alejandro Acierto",
         "lat": -60.875,
-        "lon": 122.28125
+        "lon": 122.28125,
+        "undefined": " "
     },
     {
         "id": 1,
         "value": "Dan Addington",
         "lat": -100.2188,
-        "lon": 164.6719
+        "lon": 164.6719,
+        "undefined": " "
     },
     {
         "id": 2,
         "value": "Saúl Aguirre",
         "lat": -93.1875,
-        "lon": 141.5781
+        "lon": 141.5781,
+        "undefined": " "
     },
     {
         "id": 3,
-        "value": "Carlotta Aikens"
+        "value": "Carlotta Aikens",
+        "undefined": " "
     },
     {
         "id": 4,
-        "value": "Nick Albertson"
+        "value": "Nick Albertson",
+        "undefined": " "
     },
     {
         "id": 5,
-        "value": "Diana Alleyne"
+        "value": "Diana Alleyne",
+        "undefined": " "
     },
     {
         "id": 6,
-        "value": "Drew Alleyne"
+        "value": "Drew Alleyne",
+        "undefined": " "
     },
     {
         "id": 7,
-        "value": "Marcus Sterling Alleyne"
+        "value": "Marcus Sterling Alleyne",
+        "undefined": " "
     },
     {
         "id": 8,
-        "value": "Dorian Allworthy"
+        "value": "Dorian Allworthy",
+        "undefined": " "
     },
     {
         "id": 9,
-        "value": "Daina Almario-Kopp"
+        "value": "Daina Almario-Kopp",
+        "undefined": " "
     },
     {
         "id": 10,
-        "value": "Candida Alvarez"
+        "value": "Candida Alvarez",
+        "undefined": " "
     },
     {
         "id": 11,
-        "value": "Brandon Alvendia"
+        "value": "Brandon Alvendia",
+        "undefined": " "
     },
     {
         "id": 12,
-        "value": "Kayla Anderson"
+        "value": "Kayla Anderson",
+        "undefined": " "
     },
     {
         "id": 13,
         "value": "Joanne Aono",
         "lat": -75.6563,
-        "lon": 165.5
+        "lon": 165.5,
+        "undefined": " "
     },
     {
         "id": 14,
-        "value": "Masha Aptekar"
+        "value": "Masha Aptekar",
+        "undefined": " "
     },
     {
         "id": 15,
         "value": "Patricia Armato",
         "lat": -95.875,
-        "lon": 75.25
+        "lon": 75.25,
+        "undefined": " "
     },
     {
         "id": 16,
         "value": "Nelson Armour",
         "lat": -78.5,
-        "lon": 119.1563
+        "lon": 119.1563,
+        "undefined": " "
     },
     {
         "id": 17,
-        "value": "CouSandra Armstrong"
+        "value": "CouSandra Armstrong",
+        "undefined": " "
     },
     {
         "id": 18,
         "value": "Oscar Arriola",
         "lat": -61.2222,
-        "lon": 136.8761
+        "lon": 136.8761,
+        "undefined": " "
     },
     {
         "id": 19,
         "value": "Claire Ashley",
         "lat": -84.21875,
-        "lon": 152.8125
+        "lon": 152.8125,
+        "undefined": " "
     },
     {
         "id": 20,
-        "value": "Jeffrey Michael Austin"
+        "value": "Jeffrey Michael Austin",
+        "undefined": " "
     },
     {
         "id": 21,
-        "value": "Matthew Avignone"
+        "value": "Matthew Avignone",
+        "undefined": " "
     },
     {
         "id": 22,
-        "value": "Rocio Azarloza"
+        "value": "Rocio Azarloza",
+        "undefined": " "
     },
     {
         "id": 23,
-        "value": "Amy Babinec"
+        "value": "Amy Babinec",
+        "undefined": " "
     },
     {
         "id": 24,
-        "value": "Lise Haller Baggesen"
+        "value": "Lise Haller Baggesen",
+        "undefined": " "
     },
     {
         "id": 25,
-        "value": "Debra Balchen"
+        "value": "Debra Balchen",
+        "undefined": " "
     },
     {
         "id": 26,
-        "value": "Almond Ball"
+        "value": "Almond Ball",
+        "undefined": " "
     },
     {
         "id": 27,
-        "value": "Andy Ball"
+        "value": "Andy Ball",
+        "undefined": " "
     },
     {
         "id": 28,
@@ -253,7 +282,9 @@ var participants =[
     },
     {
         "id": 57,
-        "value": "Zachary Buchner"
+        "value": "Zachary Buchner",
+        "lat": -71.0259,
+        "lon": 91.415
     },
     {
         "id": 58,
@@ -866,7 +897,9 @@ var participants =[
     },
     {
         "id": 201,
-        "value": "Magalie Guerin"
+        "value": "Magalie Guerin",
+        "lat": -88.7188,
+        "lon": 179.9688
     },
     {
         "id": 202,
@@ -946,7 +979,9 @@ var participants =[
     },
     {
         "id": 219,
-        "value": "Erin Hayden"
+        "value": "Erin Hayden",
+        "lat": -76.6451,
+        "lon": 162.9524
     },
     {
         "id": 220,
@@ -1401,7 +1436,9 @@ var participants =[
     },
     {
         "id": 321,
-        "value": "Nazafarim Lotfi"
+        "value": "Nazafarim Lotfi",
+        "lat": -88.4063,
+        "lon": 176.7813
     },
     {
         "id": 322,
@@ -1409,7 +1446,9 @@ var participants =[
     },
     {
         "id": 323,
-        "value": "Angela Lopez"
+        "value": "Angela Lopez",
+        "lat": -76.4802,
+        "lon": 159.2347
     },
     {
         "id": 324,
@@ -1914,7 +1953,9 @@ var participants =[
     },
     {
         "id": 443,
-        "value": "Jeff Robinson"
+        "value": "Jeff Robinson",
+        "lat": -74.25,
+        "lon": 161.6875
     },
     {
         "id": 444,
@@ -2505,5 +2546,9 @@ var participants =[
         "lat": -77.4688,
         "lon": 127.8438,
         "notes": "not in the original list"
+    },
+    {
+        "id": " ",
+        "value": " "
     }
 ]
