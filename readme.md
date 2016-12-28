@@ -1,3 +1,4 @@
 # dubster2k.github.io
 
-A site to show my opensource projects on github
+<a href="dubster2k.github.io">A site</a> showcasing my opensource projects on github 
+
