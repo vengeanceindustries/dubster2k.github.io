@@ -1,4 +1,5 @@
 var participants =
+    
     [
     {
         "id": 0,
@@ -841,7 +842,9 @@ var participants =
     },
     {
         "id": 194,
-        "value": "Michelle Graves"
+        "value": "Michelle Graves",
+        "lat": -82.0625,
+        "lon": 125.0938
     },
     {
         "id": 195,
@@ -2519,4 +2522,6 @@ var participants =
         "lon": 127.8438,
         "notes": "not in the original list"
     }
-]
+    
+
+];
