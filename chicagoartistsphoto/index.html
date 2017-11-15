@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,104 +15,203 @@
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <style>
-  .header {}
-  .inMap {color:#000000;}
-  .offMap {color:#666;display: inline-block;
-  width: 180px;}
-  .info {
-			padding: 6px 8px;
-			font: 14px/16px Arial, Helvetica, sans-serif;
-			background: white;
-			background: rgba(255,255,255,0.8);
-			box-shadow: 0 0 15px rgba(0,0,0,0.2);
-			border-radius: 5px;
-		}
-		.info h4 {
-			margin: 0 0 5px;
-			color: #777;
-		}
-  </style>
-  <body>
 
-   <nav class="navbar navbar-inverse">
-     <div class="container">
-         <div class="navbar-header">
+</head>
+<style>
+/*
+* Style tweaks
+* --------------------------------------------------
+*/
 
-             <h2 class="navbar-brand">A Map of 2015 Chicago Artists Group Portrait</h2>
-         </div>
+html,
+body {
+    overflow-x: hidden;
+    /* Prevent scroll on narrow devices */
+}
 
-       </div><!--/.container -->
-   </nav>
-  <div class="container">
-    <div class="row">
-  <div class="col-md-6"><div id="map" style="width: 500px; height: 350px"></div></div>
-  <div class="col-md-6">
-
-    <p>About the photo on <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br>
-    About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br>
-    This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br>
-    The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br>
-    A spreadsheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (write protected)  <br></p>
-    <p> To get the coordinates of a person in the photo click on it on the face and the coordinates will appear in a pop up.</p>
-     <p> Questions comments email dubster2k-AT-yahoo-DOT-com</p>
-	  <p><input type="text" id="tags"><button onclick="showLatLon();">Show</button></p>
-  </div>
-</div>
-</div>
-<div class="container">
-  <div class="row">
-<div class="col-md-12"><b>On the Map</b><p id=listParticipantsDone></p></div>
+body .row {
+    padding-top: 100px;
+}
 
 
+.header {}
+
+.inMap {
+    color: #000000;
+}
+
+.offMap {
+    color: #666;
+    display: inline-block;
+    width: 180px;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+</style>
+
+<body>
+    <nav id="header" class="navbar navbar-fixed-top navbar-inverse">
+        <div id="header-containe4r" class="container navbar-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                          <span class="sr-only">Toggle navigation</span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                          <span class="icon-bar"></span>
+                      </button>
+                <a id="brand" class="navbar-brand" href="#">A Map of a 2015 Chicago Artists Group Portrait</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#aboutSection">About </a></li>
+                    <li><a href="#mapSection">The Map</a></li>
+                    <li> <a href="#addnfo">Contribute information</a></li>
+                    <li><a href="#FaqSection">faq</a></li>
+                    <li><a href="#notOnTheMap">not on the map</a></li>
+                </ul>
+            </div>
+            <!-- /.nav-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- /.navbar -->
 
 
-</div>
-</div>
-<div class="container">
-  <div class="row">
-
-<div id="tabs">
-  <ul id="tabLinks">
+    <div class="container">
+        <div class="row" id="aboutSection">
+            <p>About the photo on <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br> About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br> This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br> The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br> A spreadsheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (write protected) <br></p>
+            <p> To get the coordinates of a person in the photo click on it on the face and the coordinates will appear in a pop up.</p>
+            <p> Questions comments email dubster2k-AT-yahoo-DOT-com</p>
 
 
-  </ul>
+        </div>
+    </div>
+    <!--/.container -->
+
+    <div class="container">
+        <div class="row" id="mapSection">
+            <div class="col-md-12">
+                <div id="map" style="width: 500px; height: 350px"></div>
+            </div>
+            <p><input type="text" id="searchAutoComplete"><button onclick="showLatLon();">Show</button></p>
+
+            <div id="tabs">
+                <ul id="tabLinks">
 
 
-</div>
-</div>
-</div>
-
-<div class="container">
-  <div class="row">
-
-<div class="col-md-12"><b>Missing from the Map</b><p id=listParticipantsMissing></p></div>
+                </ul>
 
 
-</div>
-
-</div>
+            </div>
+        </div>
+    </div>
+    <!--/.container -->
 
 
 
+    <div class="container">
+        <div class="row" id=addnfo>
 
-     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+            <div class="col-md-12">
+                <p> See yourself or someone you know?</p>
+            </div>
 
-     <script>
-    var participantsDone=" ";
-    var participantsMissing=" ";
-    var showLon=0;
-    var showLat=0;
-    var faces = new L.LayerGroup();
-    var popup = L.popup();
-    var map = L.map('map', {
+
+        </div>
+    </div>
+    <!--/.container -->
+
+    <div class="container">
+        <div class="row" id="FaqSection">
+
+            <div class="col-md-12"><b>FAQ</b>
+                <ul>
+                    <li><b>Is this web page affiliated with jason lazarus?</b>
+                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
+                    </li>
+                    <li><b>I was there and I don't see my self what should I do?</b>
+                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
+                    </li>
+                    <li><b>Is this web page affiliated with jason lazarus?</b>
+                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
+                    </li>
+                    <li><b>Why is </b>
+                        <p>This</p>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+    <!--/.container -->
+
+
+
+
+    <div class="container">
+        <div class="row" id=notOnTheMap>
+
+            <div class="col-md-12"><b>Missing from the Map</b>
+                <p id=listParticipantsMissing></p>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!--/.container -->
+
+
+
+
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+    <script>
+    var participantsOffMap = [];
+
+    var showLon = 0;
+    var showLat = 0;
+    var faces,popup,map  //globals
+// going thru the listand moving names without coordinates to a different array.
+    for (var i = participants.length - 1; i >= 0; i--) {
+
+        if (participants[i].lat != null) {
+
+        }
+        else {
+          {
+            participantsOffMap.push(participants[i].value);
+             participants.splice(i, 1);
+          }
+        }
+
+    }
+    for (var i = 0, len = participants.length; i < len; i++) {
+
+        participants[i].id =i;
+
+        }
+
+
+    faces = new L.LayerGroup();
+    popup = L.popup();
+    map = L.map('map', {
 
         crs: L.CRS.Simple
     }).setView([-80, 110], 2);
@@ -120,180 +220,238 @@
         maxZoom: 5,
         layers: [faces],
         tms: false,
-        continuousWorld:true
+        continuousWorld: true
     }).addTo(map);
     map.on('click', onMapClick);
     var info = L.control();
 
-    		info.onAdd = function (map) {
-    			this._div = L.DomUtil.create('div', 'info');
-    			this.update();
-    			return this._div;
-    		};
+    info.onAdd = function(map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
 
-    		info.update = function (aPosition) {
-          var infoString='<h2>Click on a square</h2>';
-          if (aPosition)
-          {
-            infoString='<h2>'+participants[aPosition].value+'</h2>';
-            if (participants[aPosition].url)
-            {
-              infoString=infoString+'<br><a href="'+participants[aPosition].url+'">'+participants[aPosition].url+'</a>'
+    info.update = function(aPosition) {
+        var infoString = '<h2>Click on a square</h2>';
+        if (aPosition) {
+            infoString = '<h2>' + participants[aPosition].value + '</h2>';
+            if (participants[aPosition].url) {
+                infoString = infoString + '<br><a href="' + participants[aPosition].url + '">' + participants[aPosition].url + '</a>'
             }
-          }
-    			this._div.innerHTML = infoString ;
-    		};
+        }
+        this._div.innerHTML = infoString;
+    };
 
-    		info.addTo(map);
+    info.addTo(map);
+
+// going thru a cleaned list adding markers
+
+    for (var i = 0; i < participants.length; i++) {
+
+        //if (participants[i].lat != null) {
+            L.polygon([
+                [(participants[i].lat + 0.5), (participants[i].lon + 0.5)],
+                [(participants[i].lat + 0.5), (participants[i].lon - 0.5)],
+                [(participants[i].lat - 0.5), (participants[i].lon - 0.5)],
+                [(participants[i].lat - 0.5), (participants[i].lon + 0.5)]
+            ], {
+                weight: 2,
+                color: '#f00',
+                fillColor: null,
+                fillOpacity: 0,
+                infoTag: i
+
+            }).addTo(faces).on("click", function(e) {
+                getInfo(e.target.options.infoTag)
+            }); //.bindPopup(participants[i].value);
+      //  }
 
 
-  for (var i = 0, len = participants.length; i < len; i++) {
-
-    if  (participants[i].lat != null)
-    {
-    L.polygon([
-      [(participants[i].lat+0.5), (participants[i].lon+0.5)],
-      [(participants[i].lat+0.5), (participants[i].lon-0.5)],
-      [(participants[i].lat-0.5), (participants[i].lon-0.5)],
-      [(participants[i].lat-0.5), (participants[i].lon+0.5)]
-    ],{
-      weight: 2,
-			color: '#f00',
-			fillColor: null,
-			fillOpacity:0,
-      alt:i
-
-		}).addTo(faces).on("click", function(e)
-  {getInfo(e.target.options.alt)} );//.bindPopup(participants[i].value);
     }
-
-  }
-faces.addTo(map);
+    faces.addTo(map);
 
 
 
 
+    var overlays = {
+        "Show Square": faces
+    };
 
-var overlays = {
-      "Show markers": faces
-};
 
-
-  L.control.layers(null,overlays).setPosition('topright').addTo(map);
+    L.control.layers(null, overlays).setPosition('topright').addTo(map);
 
 
 
 
     function onFaceClick(e) {
-      popup
-        .setLatLng(e.latlng)
-        .setContent("face" + e.latlng.toString())
-        .openOn(map);
+        popup
+            .setLatLng(e.latlng)
+            .setContent("face" + e.latlng.toString())
+            .openOn(map);
     }
 
-		function onMapClick(e) {
-      var coorinatesString="latitude = "+ e.latlng.lat.toFixed(4)+", longtitude = "+ e.latlng.lng.toFixed(4);
-      //coorinatesString=.toFixed(2);
-      //console.log(e);
-			popup
-				.setLatLng(e.latlng)
-				.setContent(coorinatesString)
-				.openOn(map);
-		}
-
-
-    function setAndShow(myLat,myLon)
-    {
-      showLat= myLat ;
-      showLon= myLon ;
-      showLatLon();
+    function onMapClick(e) {
+        var coorinatesString = "latitude = " + e.latlng.lat.toFixed(4) + ", longtitude = " + e.latlng.lng.toFixed(4);
+        //coorinatesString=.toFixed(2);
+        //console.log(e);
+        popup
+            .setLatLng(e.latlng)
+            .setContent(coorinatesString)
+            .openOn(map);
     }
-    function showLatLon()
-    {
-      map.setView(L.latLng(showLat,showLon ), 5, {animation: true});
-    }
-    function getInfo(arrayPosition)
-  {
-    //alert(event);
-    showLat= participants[arrayPosition].lat ;
-    showLon= participants[arrayPosition].lon ;
-    info.update(arrayPosition)
-    showLatLon();
-  }
 
-	</script>
+
+    function setAndShow(myLat, myLon) {
+        showLat = myLat;
+        showLon = myLon;
+        showLatLon();
+    }
+
+    function showLatLon() {
+        map.setView(L.latLng(showLat, showLon), 5, {
+            animation: true
+        });
+    }
+
+    function getInfo(arrayPosition) {
+        console.log(arrayPosition)
+        showLat = participants[arrayPosition].lat;
+        showLon = participants[arrayPosition].lon;
+        info.update(arrayPosition)
+        showLatLon();
+    }
+    </script>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
-$(function() {
+    $(function() {
 
-for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
-  var tabLetter=String.fromCharCode(65+abcIndex);
- $("<li></li>", {"id": "labelTab-"+tabLetter}).html('<a href="#tabs-'+tabLetter+'">'+tabLetter+'</a>').appendTo("#tabLinks");
+        for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
+            var tabLetter = String.fromCharCode(65 + abcIndex);
+            $("<li></li>", {
+                "id": "labelTab-" + tabLetter
+            }).html('<a href="#tabs-' + tabLetter + '">' + tabLetter + '</a>').appendTo("#tabLinks");
 
-  $( "<div></div>", {
-    "id": "tabs-"+tabLetter}).appendTo("#tabs");
-  }
+            $("<div></div>", {
+                "id": "tabs-" + tabLetter
+            }).appendTo("#tabs");
+        }
 
 
- $( "#tabs" ).tabs();
-for (var i = 0, len = participants.length; i < len; i++) {
+        $("#tabs").tabs();
+        for (var i = 0, len = participants.length; i < len; i++) {
 
-  if  (participants[i].lat != null)
-  {
-    mybutton=$( "<button></button>", {
-      "class": "inMap","arrayPosition":i,
-      on: {
-        click: function( event ) {
-          getInfo($(this).attr("arrayPosition"));
+            //if (participants[i].lat != null) {
+                mybutton = $("<button></button>", {
+                    "class": "inMap",
+                    "arrayPosition": i,
+                    on: {
+                        click: function(event) {
+
+                            getInfo($(this).attr("arrayPosition"));
+                        }
+                    }
+                }).text(participants[i].value);
+                myLetter = (participants[i].value).toUpperCase().charAt(0)
+                if ((myLetter.charCodeAt(0) > 64) && (myLetter.charCodeAt(0) < 91)) {
+                    mybutton.appendTo("#tabs-" + myLetter);
+                }
+          /*  } else {
+                $("<span></span>", {
+                    "class": "offMap",
+
+                }).text(participants[i].value + "  ").appendTo("#listParticipantsMissing");
             }
-          }
-}).text(participants[i].value);
-  myLetter=(participants[i].value).toUpperCase().charAt(0)
-    if ((myLetter.charCodeAt(0)>64)&&(myLetter.charCodeAt(0)<91))
-    {
-      mybutton.appendTo( "#tabs-"+myLetter);
-    }
-  }
-  else {
-    $( "<span></span>", {
-      "class": "offMap","arrayPosition":i,
-}).text(participants[i].value+"  ").appendTo( "#listParticipantsMissing" );
-  }
-}
+            */
+        }
 
-for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
-  var tabLetter=String.fromCharCode(65+abcIndex);
-  temp=$("#tabs-"+tabLetter).html();
-  if (temp=="") {
-      console.log(tabLetter);
-      $("#tabs-"+tabLetter).remove();
-      $( "#labelTab-"+tabLetter).remove();
-      
-    }
-  }
+        for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
+            var tabLetter = String.fromCharCode(65 + abcIndex);
+            temp = $("#tabs-" + tabLetter).html();
+            if (temp == "") {
+                console.log(tabLetter);
+                $("#tabs-" + tabLetter).remove();
+                $("#labelTab-" + tabLetter).remove();
 
-$( "#tabs" ).tabs( "refresh" );
+            }
+        }
 
-  $( "#tags" ).autocomplete({
-  source: participants,
-  focus: function( event, ui ) {
-    showLat= ui.item.lat ;
-    showLon= ui.item.lon ;
-  },
-  select: function( event, ui ) {
-    getInfo(ui.item.id)
-    //showLat= ui.item.lat ;
-    //showLon= ui.item.lon ;
-  }
-});
+        $("#tabs").tabs("refresh");
 
-});
-</script>
-  </body>
+        for (var i = 0, len = participantsOffMap.length; i < len; i++) {
+          $("<span></span>", {
+              "class": "offMap",
+
+          }).text(participantsOffMap[i] + "  ").appendTo("#listParticipantsMissing");
+        }
+
+
+        $("#searchAutoComplete").autocomplete({
+            source: participants,
+            focus: function(event, ui) {
+                showLat = ui.item.lat;
+                showLon = ui.item.lon;
+            },
+            select: function(event, ui) {
+                getInfo(ui.item.id)
+                //showLat= ui.item.lat ;
+                //showLon= ui.item.lon ;
+            }
+        });
+        //  paste from http://codepen.io/chriscoyier/pen/dpBMVP/
+        // Select all links with hashes
+        $('a[href*="#"]')
+            // Remove links that don't actually link to anything
+            .not('[href="#"]')
+            .not('[href="#0"]')
+            .click(function(event) {
+                // On-page links
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+                    location.hostname == this.hostname
+                ) {
+                    // Figure out element to scroll to
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    // Does a scroll target exist?
+                    if (target.length) {
+                        // Only prevent default if animation is actually gonna happen
+                        event.preventDefault();
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000, function() {
+                            // Callback after animation
+                            // Must change focus!
+                            var $target = $(target);
+                            $target.focus();
+                            if ($target.is(":focus")) { // Checking if the target was focused
+                                return false;
+                            } else {
+                                $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                                $target.focus(); // Set focus again
+                            };
+                        });
+                    }
+                }
+            });
+
+    });
+    </script>
+</body>
+
 </html>
+<!-- to do
+
+
+
+
+
+
+
+
+--->
