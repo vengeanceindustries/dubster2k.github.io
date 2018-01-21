@@ -5,17 +5,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>A Map of Chicago Artists Portrait</title>
 
     <!-- Bootstrap -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="participantsArray.js" type="text/javascript"></script>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
 
+</script>
 </head>
 <style>
 /*
@@ -33,7 +33,9 @@ body .row {
     padding-top: 100px;
 }
 
-
+i {
+  color: #333;
+}
 .header {}
 
 .inMap {
@@ -91,9 +93,16 @@ body .row {
 
     <div class="container">
         <div class="row" id="aboutSection">
-            <p>About the photo on <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><br> About the photo on <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">Archive.org</a><br> This map <s>was</s> is being created by <a href="http://dubster.com">Dubi Kaufmann</a><br> The source code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a><br> A spreadsheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (write protected) <br></p>
-            <p> To get the coordinates of a person in the photo click on it on the face and the coordinates will appear in a pop up.</p>
-            <p> Questions comments email dubster2k-AT-yahoo-DOT-com</p>
+            <p>This page was made and is maintained by <a href="http://www.dubster.com">Dubi kaufmann</a> and its goal is to connect names to faces in a large group photo.
+              The group photo was taken in chicago in 2015 by <a href="http://jasonlazarus.com">Jason Lazaus </a>.
+              <br>
+              pasete from <a href="http://jasonlazarus.com/project_3_495/2004present">Jason Lazaus site</a><p>
+              <p><i> On Saturday, June 20th, 2015, ALL self-identifying Chicago Artists were invited to sit for a group portrait on the steps of the Museum of Contemporary Art, Chicago, IL. The open ended and non-discriminating gesture brought a diverse array of artists from across the city to form this historical moment. Photo Assistants: Aron Gent and Patrick Putze.
+*This portrait, available in high resolution, has been released to the public domain. It can be accessed at the Internet Archive: <a href="https://archive.org/details/ChicagoArtistGroupPortrait2015">https://archive.org/details/ChicagoArtistGroupPortrait2015</a>
+</i><p>
+              <p> This page is open source and code is on <a href="https://github.com/dubster2k/dubster2k.github.io/tree/master/chicagoartistsphoto">Github</a> there is also
+                a spreadsheet with <a href="https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing">a list of names and coodinates</a> (write protected) <br></p>
+
 
 
         </div>
@@ -105,7 +114,7 @@ body .row {
             <div class="col-md-12">
                 <div id="map" style="width: 500px; height: 350px"></div>
             </div>
-            <p><input type="text" id="searchAutoComplete"><button onclick="showLatLon();">Show</button></p>
+            <p>search:<input type="text" id="searchAutoComplete"></p>
 
             <div id="tabs">
                 <ul id="tabLinks">
@@ -125,7 +134,8 @@ body .row {
         <div class="row" id=addnfo>
 
             <div class="col-md-12">
-                <p> See yourself or someone you know?</p>
+                <p> See yourself or someone you recognize? This page is crowed sourced. send an email with the map coordinates to dubster2k-AT-yahoo-DOT-com. To get the coordinates of a person in the photo click on the map on the face and the coordinates will appear in a pop up.</p>
+                <p> Questions/comments/corrections please email dubster2k-AT-yahoo-DOT-com</p></p>
             </div>
 
 
@@ -141,15 +151,14 @@ body .row {
                     <li><b>Is this web page affiliated with jason lazarus?</b>
                         <p>No. The image he produced is in the public domain and was meant to be remixed</p>
                     </li>
-                    <li><b>I was there and I don't see my self what should I do?</b>
-                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
+                    <li><b>Which javascript libraries are used in this page?</b>
+                        <p> <a href="http://leafletjs.com/">leaflet</a> for the map.
+                          <a href="https://jquery.com/">jquery</a> for the search box autocomplete.
+                          <a href="https://getbootstrap.com">bootstrap</a> for formatting.
+                          <a href="https://github.com/jsoma/tabletop">tabletop</a> for using a Google spreadsheet as input.
+                            </p>
                     </li>
-                    <li><b>Is this web page affiliated with jason lazarus?</b>
-                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
-                    </li>
-                    <li><b>Why is </b>
-                        <p>This</p>
-                    </li>
+
                 </ul>
             </div>
 
@@ -178,36 +187,27 @@ body .row {
     <!--/.container -->
 
 
+<!--external JS>
 
-
+    <!-- jQuery (necessary for Bootstrap JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <!-- tableTop -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script type='text/javascript'>
 
-    <script>
+     //Globals
+     var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing';
+
+    var participants =[];
     var participantsOffMap = [];
 
     var showLon = 0;
     var showLat = 0;
     var faces,popup,map  //globals
-// going thru the listand moving names without coordinates to a different array.
-    for (var i = participants.length - 1; i >= 0; i--) {
-
-        if (participants[i].lat != null) {
-
-        }
-        else {
-          {
-            participantsOffMap.push(participants[i].value);
-             participants.splice(i, 1);
-          }
-        }
-
-    }
-    for (var i = 0, len = participants.length; i < len; i++) {
-
-        participants[i].id =i;
-
-        }
-
 
     faces = new L.LayerGroup();
     popup = L.popup();
@@ -243,43 +243,40 @@ body .row {
     };
 
     info.addTo(map);
-
-// going thru a cleaned list adding markers
-
-    for (var i = 0; i < participants.length; i++) {
-
-        //if (participants[i].lat != null) {
-            L.polygon([
-                [(participants[i].lat + 0.5), (participants[i].lon + 0.5)],
-                [(participants[i].lat + 0.5), (participants[i].lon - 0.5)],
-                [(participants[i].lat - 0.5), (participants[i].lon - 0.5)],
-                [(participants[i].lat - 0.5), (participants[i].lon + 0.5)]
-            ], {
-                weight: 2,
-                color: '#f00',
-                fillColor: null,
-                fillOpacity: 0,
-                infoTag: i
-
-            }).addTo(faces).on("click", function(e) {
-                getInfo(e.target.options.infoTag)
-            }); //.bindPopup(participants[i].value);
-      //  }
-
-
-    }
     faces.addTo(map);
-
-
-
-
     var overlays = {
         "Show Square": faces
     };
-
-
     L.control.layers(null, overlays).setPosition('topright').addTo(map);
 
+
+
+
+
+    function addPolygon(index_)
+    {
+      lat_=parseFloat(participants[index_].lat);
+        lon_=parseFloat(participants[index_].lon);
+              L.polygon([
+                  [lat_ + 0.5, lon_ + 0.5],
+                  [lat_ + 0.5, lon_ - 0.5],
+                  [lat_ - 0.5, lon_ - 0.5],
+                  [lat_ - 0.5, lon_ + 0.5]
+              ], {
+                  weight: 2,
+                  color: '#f00',
+                  fillColor: null,
+                  fillOpacity: 0,
+                  infoTag: index_
+
+              }).addTo(faces).on("click", function(e) {
+                  getInfo(e.target.options.infoTag)
+              }); //.bindPopup(participants[i].value);
+            //
+
+
+      //}
+    }
 
 
 
@@ -291,9 +288,8 @@ body .row {
     }
 
     function onMapClick(e) {
-        var coorinatesString = "latitude = " + e.latlng.lat.toFixed(4) + ", longtitude = " + e.latlng.lng.toFixed(4);
-        //coorinatesString=.toFixed(2);
-        //console.log(e);
+        var coorinatesString = "latitude = " + e.latlng.lat.toFixed(3) + ", longtitude = " + e.latlng.lng.toFixed(3);
+
         popup
             .setLatLng(e.latlng)
             .setContent(coorinatesString)
@@ -314,23 +310,109 @@ body .row {
     }
 
     function getInfo(arrayPosition) {
-        console.log(arrayPosition)
         showLat = participants[arrayPosition].lat;
         showLon = participants[arrayPosition].lon;
         info.update(arrayPosition)
         showLatLon();
     }
+    function getArray() {
+      Tabletop.init({
+        key: public_spreadsheet_url,
+        callback: processArray,
+        simpleSheet: true
+      });
+    }
+function processArray(data) {
+
+  participants = data;
+  for (var i = participants.length - 1; i >= 0; i--) {
+    if (isNaN(parseFloat(participants[i].lat)))
+    {
+      offMap(i);
+      participants.splice(i, 1); // removes them from the array
+    }
+  }
+
+    for (var i = participants.length - 1; i >= 0; i--) {
+
+        participants[i].id =i;   //for the autocomplete
+        addPolygon(i);
+        addButton(i);
+
+    }
+  removeTabs();
+  addAutoComplete();
+
+
+
+}
+
+function addButton(_index)
+{
+
+  mybutton = $("<button></button>", {
+      "class": "inMap",
+      "arrayPosition": _index,
+      on: {
+          click: function(event) {
+
+              getInfo($(this).attr("arrayPosition"));
+          }
+      }
+  }).text(participants[_index].value);
+  myLetter = (participants[_index].value).toUpperCase().charAt(0)
+  if ((myLetter.charCodeAt(0) > 64) && (myLetter.charCodeAt(0) < 91)) {
+      mybutton.appendTo("#tabs-" + myLetter);
+  }
+}
+function offMap(_index)
+{
+
+
+    $("<span></span>", {
+        "class": "offMap",
+
+    }).text(participants[_index].value + "  ").appendTo("#listParticipantsMissing");
+
+}
+function removeTabs()
+{
+
+          for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
+              var tabLetter = String.fromCharCode(65 + abcIndex);
+              temp = $("#tabs-" + tabLetter).html();
+              if (temp == "") {
+
+                  $("#tabs-" + tabLetter).remove();
+                  $("#labelTab-" + tabLetter).remove();
+
+              }
+          }
+
+          $("#tabs").tabs("refresh");
+}
+function addAutoComplete()
+{
+  $("#searchAutoComplete").autocomplete({
+      source: participants,
+      focus: function(event, ui) {
+          showLat = ui.item.lat;
+          showLon = ui.item.lon;
+          showLatLon();
+      },
+      select: function(event, ui) {
+          getInfo(ui.item.id)
+
+      }
+  });
+}
     </script>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <script>
     $(function() {
-
+        getArray();
         for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
             var tabLetter = String.fromCharCode(65 + abcIndex);
             $("<li></li>", {
@@ -344,66 +426,9 @@ body .row {
 
 
         $("#tabs").tabs();
-        for (var i = 0, len = participants.length; i < len; i++) {
-
-            //if (participants[i].lat != null) {
-                mybutton = $("<button></button>", {
-                    "class": "inMap",
-                    "arrayPosition": i,
-                    on: {
-                        click: function(event) {
-
-                            getInfo($(this).attr("arrayPosition"));
-                        }
-                    }
-                }).text(participants[i].value);
-                myLetter = (participants[i].value).toUpperCase().charAt(0)
-                if ((myLetter.charCodeAt(0) > 64) && (myLetter.charCodeAt(0) < 91)) {
-                    mybutton.appendTo("#tabs-" + myLetter);
-                }
-          /*  } else {
-                $("<span></span>", {
-                    "class": "offMap",
-
-                }).text(participants[i].value + "  ").appendTo("#listParticipantsMissing");
-            }
-            */
-        }
-
-        for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
-            var tabLetter = String.fromCharCode(65 + abcIndex);
-            temp = $("#tabs-" + tabLetter).html();
-            if (temp == "") {
-                console.log(tabLetter);
-                $("#tabs-" + tabLetter).remove();
-                $("#labelTab-" + tabLetter).remove();
-
-            }
-        }
-
-        $("#tabs").tabs("refresh");
-
-        for (var i = 0, len = participantsOffMap.length; i < len; i++) {
-          $("<span></span>", {
-              "class": "offMap",
-
-          }).text(participantsOffMap[i] + "  ").appendTo("#listParticipantsMissing");
-        }
 
 
-        $("#searchAutoComplete").autocomplete({
-            source: participants,
-            focus: function(event, ui) {
-                showLat = ui.item.lat;
-                showLon = ui.item.lon;
-            },
-            select: function(event, ui) {
-                getInfo(ui.item.id)
-                //showLat= ui.item.lat ;
-                //showLon= ui.item.lon ;
-            }
-        });
-        
+
 
     });
     </script>
