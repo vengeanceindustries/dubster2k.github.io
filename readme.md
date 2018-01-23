@@ -1,4 +1,4 @@
 # dubster2k.github.io
 
-<a href="dubster2k.github.io">A site</a> showcasing my opensource projects on github 
+<a href="http://dubster2k.github.io">A site</a> showcasing my open source projects on github 
 
