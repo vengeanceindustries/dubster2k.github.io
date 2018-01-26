@@ -236,7 +236,7 @@ i {
         if (aPosition) {
             infoString = '<h2>' + participants[aPosition].value + '</h2>';
             if (participants[aPosition].url) {
-                infoString = infoString + '<br><a href="' + participants[aPosition].url + '">' + participants[aPosition].url + '</a>'
+                infoString = infoString + '<br><a target="_blank" href="' + participants[aPosition].url + '">' + participants[aPosition].url + '</a>'
             }
         }
         this._div.innerHTML = infoString;
