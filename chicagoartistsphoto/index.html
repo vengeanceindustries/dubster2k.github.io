@@ -10,58 +10,50 @@
     <!-- Bootstrap -->
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
+    <style>
+		html,
+		body {
+			overflow-x: hidden;
+			/* Prevent scroll on narrow devices */
+		}
 
-</script>
+		body .row {
+			padding-top: 100px;
+		}
+
+		i {
+			color: #333;
+		}
+
+		.inMap {
+			color: #000000;
+		}
+
+		.offMap {
+			color: #666;
+			display: inline-block;
+			width: 180px;
+		}
+
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255, 255, 255, 0.8);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+	}
+    </style>
 </head>
-<style>
-/*
-* Style tweaks
-* --------------------------------------------------
-*/
-
-html,
-body {
-    overflow-x: hidden;
-    /* Prevent scroll on narrow devices */
-}
-
-body .row {
-    padding-top: 100px;
-}
-
-i {
-  color: #333;
-}
-.header {}
-
-.inMap {
-    color: #000000;
-}
-
-.offMap {
-    color: #666;
-    display: inline-block;
-    width: 180px;
-}
-
-.info {
-    padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-}
-
-.info h4 {
-    margin: 0 0 5px;
-    color: #777;
-}
-</style>
 
 <body>
     <nav id="header" class="navbar navbar-fixed-top navbar-inverse">
@@ -180,24 +172,23 @@ i {
                 <p id=listParticipantsMissing></p>
             </div>
 
-
         </div>
 
     </div>
     <!--/.container -->
 
 
-<!--external JS>
+<!--external JS-->
 
-    <!-- jQuery (necessary for Bootstrap JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <!-- tableTop -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
-    <script type='text/javascript'>
+<!-- jQuery (necessary for Bootstrap JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<!-- tableTop -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+<script type='text/javascript'>
 
      //Globals
      var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing';
@@ -207,101 +198,38 @@ i {
 
     var showLon = 0;
     var showLat = 0;
-    var faces,popup,map  //globals
 
-    faces = new L.LayerGroup();
-    popup = L.popup();
-    map = L.map('map', {
+    function addPolygon(pos) {
+		var person = participants[pos];
+		var lat = parseFloat(person.lat);
+		var lon = parseFloat(person.lon);
+		L.polygon([
+			[lat + 0.5, lon + 0.5],
+			[lat + 0.5, lon - 0.5],
+			[lat - 0.5, lon - 0.5],
+			[lat - 0.5, lon + 0.5]
+		], {
+			weight: 2,
+			color: '#f00',
+			fillColor: null,
+			fillOpacity: 0,
+			infoTag: pos
 
-        crs: L.CRS.Simple
-    }).setView([-80, 110], 2);
-    L.tileLayer('tiles/{z}-{x}-{y}.jpg', {
-        minZoom: 0,
-        maxZoom: 5,
-        layers: [faces],
-        tms: false,
-        continuousWorld: true
-    }).addTo(map);
-    map.on('click', onMapClick);
-    var info = L.control();
-
-    info.onAdd = function(map) {
-        this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return this._div;
-    };
-
-    info.update = function(aPosition) {
-        var infoString = '<h2>Click on a square</h2>';
-        if (aPosition) {
-            infoString = '<h2>' + participants[aPosition].value + '</h2>';
-            if (participants[aPosition].url) {
-                infoString = infoString + '<br><a target="_blank" href="' + participants[aPosition].url + '">' + participants[aPosition].url + '</a>'
-            }
-        }
-        this._div.innerHTML = infoString;
-    };
-
-    info.addTo(map);
-    faces.addTo(map);
-    var overlays = {
-        "Show Square": faces
-    };
-    L.control.layers(null, overlays).setPosition('topright').addTo(map);
-
-
-
-
-
-    function addPolygon(index_)
-    {
-      lat_=parseFloat(participants[index_].lat);
-        lon_=parseFloat(participants[index_].lon);
-              L.polygon([
-                  [lat_ + 0.5, lon_ + 0.5],
-                  [lat_ + 0.5, lon_ - 0.5],
-                  [lat_ - 0.5, lon_ - 0.5],
-                  [lat_ - 0.5, lon_ + 0.5]
-              ], {
-                  weight: 2,
-                  color: '#f00',
-                  fillColor: null,
-                  fillOpacity: 0,
-                  infoTag: index_
-
-              }).addTo(faces).on("click", function(e) {
-                  getInfo(e.target.options.infoTag)
-              }); //.bindPopup(participants[i].value);
-            //
-
-
-      //}
+		})
+		.addTo(faces)
+		.on("click", function(e) {
+			getInfo(e.target.options.infoTag)
+		});
     }
 
-
-
-    function onFaceClick(e) {
-        popup
-            .setLatLng(e.latlng)
-            .setContent("face" + e.latlng.toString())
-            .openOn(map);
-    }
-
-    function onMapClick(e) {
-        var coorinatesString = "latitude = " + e.latlng.lat.toFixed(3) + ", longtitude = " + e.latlng.lng.toFixed(3);
-
-        popup
-            .setLatLng(e.latlng)
-            .setContent(coorinatesString)
-            .openOn(map);
-    }
-
-
-    function setAndShow(myLat, myLon) {
-        showLat = myLat;
-        showLon = myLon;
-        showLatLon();
-    }
+	function onMapClick(e) {
+		// Do we really need to see the location on the map? I noticed this more than the person's name in the info box
+		var coorinatesString = "latitude = " + e.latlng.lat.toFixed(3) + ", longtitude = " + e.latlng.lng.toFixed(3);
+		popup
+			.setLatLng(e.latlng)
+			.setContent(coorinatesString)
+			.openOn(map);
+	}
 
     function showLatLon() {
         map.setView(L.latLng(showLat, showLon), 5, {
@@ -309,139 +237,172 @@ i {
         });
     }
 
-    function getInfo(arrayPosition) {
-        showLat = participants[arrayPosition].lat;
-        showLon = participants[arrayPosition].lon;
-        info.update(arrayPosition)
+    function getInfo(pos) {
+		var person = participants[pos];
+        showLat = person.lat;
+        showLon = person.lon;
+        info.update(pos);
         showLatLon();
     }
-    function getArray() {
-      Tabletop.init({
-        key: public_spreadsheet_url,
-        callback: processArray,
-        simpleSheet: true
-      });
-    }
-function processArray(data) {
 
-  participants = data;
-  for (var i = participants.length - 1; i >= 0; i--) {
-    if (isNaN(parseFloat(participants[i].lat)))
-    {
-      offMap(i);
-      participants.splice(i, 1); // removes them from the array
-    }
-  }
+	function addButton(pos) {
+		var person = participants[pos];
+		var letter = person.value.toUpperCase().charAt(0);
 
-    for (var i = participants.length - 1; i >= 0; i--) {
+		// if is a valid UTF-16 icode...
+		if ((letter.charCodeAt(0) > 64) && (letter.charCodeAt(0) < 91)) {
+			$('<button class="inMap">' + person.value + '</button>')
+				.on('click', function(e) {
+					getInfo(pos);
+				})
+				.appendTo("#tabs-" + letter);
+		}
+	}
 
-        participants[i].id =i;   //for the autocomplete
-        addPolygon(i);
-        addButton(i);
+	function offMap(_index) {
+		$("<span></span>", {
+			"class": "offMap",
+		}).text(participants[_index].value + "  ").appendTo("#listParticipantsMissing");
+	}
 
-    }
-  removeTabs();
-  addAutoComplete();
+	function addAutoComplete() {
+		$("#searchAutoComplete").autocomplete({
+			source: participants,
+			focus: function(event, ui) {
+				showLat = ui.item.lat;
+				showLon = ui.item.lon;
+				showLatLon();
+			},
+			select: function(event, ui) {
+				getInfo(ui.item.id)
 
+			}
+		});
+	}
 
+	function removeTabs() {
+		var i = 0;
 
-}
+        for (i; i < 26; i++) {
+			var tabLetter = String.fromCharCode(65 + i);
+			var tab = $("#tabs-" + tabLetter);
 
-function addButton(_index)
-{
+			if (tab && tab.html() == "") {
+				tab.remove();
+				$("#labelTab-" + tabLetter).remove();
+			}
+		}
 
-  mybutton = $("<button></button>", {
-      "class": "inMap",
-      "arrayPosition": _index,
-      on: {
-          click: function(event) {
+		$("#tabs").tabs("refresh");
+	}
 
-              getInfo($(this).attr("arrayPosition"));
-          }
-      }
-  }).text(participants[_index].value);
-  myLetter = (participants[_index].value).toUpperCase().charAt(0)
-  if ((myLetter.charCodeAt(0) > 64) && (myLetter.charCodeAt(0) < 91)) {
-      mybutton.appendTo("#tabs-" + myLetter);
-  }
-}
-function offMap(_index)
-{
+	function makeTabs() {
+		var list = '';
+		var tabs = '';
+		var i = 0;
 
+        for (i; i < 26; i++) {
+            var tabLetter = String.fromCharCode(65 + i);
+			list += '<li id="labelTab-' + tabLetter + '">';
+			list += '<a href="#tabs-' + tabLetter + '">' + tabLetter + '</a>';
+			list += '</li>';
 
-    $("<span></span>", {
-        "class": "offMap",
-
-    }).text(participants[_index].value + "  ").appendTo("#listParticipantsMissing");
-
-}
-function removeTabs()
-{
-
-          for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
-              var tabLetter = String.fromCharCode(65 + abcIndex);
-              temp = $("#tabs-" + tabLetter).html();
-              if (temp == "") {
-
-                  $("#tabs-" + tabLetter).remove();
-                  $("#labelTab-" + tabLetter).remove();
-
-              }
-          }
-
-          $("#tabs").tabs("refresh");
-}
-function addAutoComplete()
-{
-  $("#searchAutoComplete").autocomplete({
-      source: participants,
-      focus: function(event, ui) {
-          showLat = ui.item.lat;
-          showLon = ui.item.lon;
-          showLatLon();
-      },
-      select: function(event, ui) {
-          getInfo(ui.item.id)
-
-      }
-  });
-}
-    </script>
-
-
-
-    <script>
-    $(function() {
-        getArray();
-        for (var abcIndex = 0; abcIndex < 26; abcIndex++) {
-            var tabLetter = String.fromCharCode(65 + abcIndex);
-            $("<li></li>", {
-                "id": "labelTab-" + tabLetter
-            }).html('<a href="#tabs-' + tabLetter + '">' + tabLetter + '</a>').appendTo("#tabLinks");
-
-            $("<div></div>", {
-                "id": "tabs-" + tabLetter
-            }).appendTo("#tabs");
+			tabs += '<div id="tabs-' + tabLetter + '"></div>';
         }
 
+		$("#tabLinks").append(list);
 
-        $("#tabs").tabs();
+		$("#tabs").append(tabs)
+			.tabs();
+	}
 
+	function processArray(data) {
+		if (data) {
+			participants = data;
+			for (var i = participants.length - 1; i >= 0; i--) {
+				if (isNaN(parseFloat(participants[i].lat))) {
+					offMap(i);
+					participants.splice(i, 1); // removes them from the array
+				}
+			}
 
+			for (var i = participants.length - 1; i >= 0; i--) {
+				participants[i].id = i; // for the autocomplete
+				addPolygon(i);
+				addButton(i);
+			}
 
+			removeTabs();
+			addAutoComplete();
+		} else {
+			console.error('Could not return participants data.');
+		}
+	}
 
-    });
+	/*
+	* We are going to do all these things after we have our functions set,
+	* since some of them are dependent on the functions
+	**/
+
+	// What is L? Leaflet?
+	var faces = new L.LayerGroup();
+	var popup = L.popup();
+	var info = L.control();
+	var map = L.map('map', {
+		crs: L.CRS.Simple
+	});
+	var overlays = {
+		"Show Square": faces
+	};
+
+	map.setView([-80, 110], 2)
+		.on('click', onMapClick);
+
+	// something is wrong here, it's not finding files based on this formay
+	L.tileLayer('tiles/{z}-{x}-{y}.jpg', {
+			minZoom: 0,
+			maxZoom: 5,
+			layers: [faces],
+			tms: false,
+			continuousWorld: true
+		})
+		.addTo(map);
+
+	info.onAdd = function(map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function(pos) {
+		var infoString = 'Click on a square';
+		if (pos) {
+			var person = participants[pos];
+			infoString = '<p>' + person.value + '</p>';
+			if (person.url) {
+				infoString += '<br /><a target="_blank" href="' + person.url + '">' + person.url + '</a>'
+			}
+		}
+		this._div.innerHTML = infoString;
+	};
+
+	info.addTo(map);
+	faces.addTo(map);
+
+	L.control
+		.layers(null, overlays)
+		.setPosition('topright')
+		.addTo(map);
+
+	$(function() {
+		Tabletop.init({
+			key: public_spreadsheet_url,
+			callback: processArray,
+			simpleSheet: true
+		});
+
+		makeTabs();
+	});
     </script>
 </body>
-
 </html>
-<!-- to do
-
-
-
-
-
-
-
-
---->
