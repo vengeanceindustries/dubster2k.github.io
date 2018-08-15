@@ -33,10 +33,22 @@
 			color: #000000;
 		}
 
+		.offMap-list {
+			padding: 0;
+			columns: 3 auto;
+		}
+
+		@media screen and (min-width: 1200px) {
+			.offMap-list {
+				columns: 7 auto;
+			}
+		}
+
 		.offMap {
 			color: #666;
-			display: inline-block;
-			width: 180px;
+			display: block;
+			line-height: 1.2;
+			margin-bottom: 1rem;
 		}
 
 		.info {
@@ -51,7 +63,7 @@
 		.info h4 {
 			margin: 0 0 5px;
 			color: #777;
-	}
+		}
     </style>
 </head>
 
@@ -130,34 +142,30 @@
                 <p> Questions/comments/corrections please email dubster2k-AT-yahoo-DOT-com</p></p>
             </div>
 
-
         </div>
     </div>
     <!--/.container -->
 
     <div class="container">
-        <div class="row" id="FaqSection">
+		<div class="row" id="FaqSection">
 
-            <div class="col-md-12"><b>FAQ</b>
-                <ul>
-                    <li><b>Is this web page affiliated with jason lazarus?</b>
-                        <p>No. The image he produced is in the public domain and was meant to be remixed</p>
-                    </li>
-                    <li><b>Which javascript libraries are used in this page?</b>
-                        <p> <a href="http://leafletjs.com/">leaflet</a> for the map.
-                          <a href="https://jquery.com/">jquery</a> for the search box autocomplete.
-                          <a href="https://getbootstrap.com">bootstrap</a> for formatting.
-                          <a href="https://github.com/jsoma/tabletop">tabletop</a> for using a Google spreadsheet as input.
-                            </p>
-                    </li>
+			<div class="col-md-12"><b>FAQ</b>
+				<ul>
+					<li><b>Is this web page affiliated with jason lazarus?</b>
+						<p>No. The image he produced is in the public domain and was meant to be remixed</p>
+					</li>
+					<li><b>Which javascript libraries are used in this page?</b>
+						<p>
+							<a href="http://leafletjs.com/">leaflet</a> for the map.
+							<a href="https://jquery.com/">jquery</a> for the search box autocomplete.
+							<a href="https://getbootstrap.com">bootstrap</a> for formatting.
+							<a href="https://github.com/jsoma/tabletop">tabletop</a> for using a Google spreadsheet as input.
+						</p>
+					</li>
+				</ul>
+			</div>
 
-                </ul>
-            </div>
-
-
-        </div>
-
-
+		</div>
 
     </div>
     <!--/.container -->
@@ -166,10 +174,13 @@
 
 
     <div class="container">
-        <div class="row" id=notOnTheMap>
+        <div class="row" id="notOnTheMap">
 
-            <div class="col-md-12"><b>Missing from the Map</b>
-                <p id=listParticipantsMissing></p>
+            <div class="col-md-12">
+				<h4>Missing from the Map</h4>
+                <ul id=listParticipantsMissing class="offMap-list">
+					{}
+				</ul>
             </div>
 
         </div>
@@ -190,8 +201,8 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 <script type='text/javascript'>
 
-     //Globals
-     var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing';
+	//Globals
+	var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/11XJtPkqNhz771uD_zByYI8hveJGcrZd97GsEA1kdfMM/edit?usp=sharing';
 
     var participants =[];
     var participantsOffMap = [];
@@ -203,22 +214,22 @@
 		var person = participants[pos];
 		var lat = parseFloat(person.lat);
 		var lon = parseFloat(person.lon);
+		var radius = 0.75;
 		L.polygon([
-			[lat + 0.5, lon + 0.5],
-			[lat + 0.5, lon - 0.5],
-			[lat - 0.5, lon - 0.5],
-			[lat - 0.5, lon + 0.5]
+			[lat + radius, lon + radius],
+			[lat + radius, lon - radius],
+			[lat - radius, lon - radius],
+			[lat - radius, lon + radius]
 		], {
 			weight: 2,
 			color: '#f00',
 			fillColor: null,
 			fillOpacity: 0,
 			infoTag: pos
-
 		})
 		.addTo(faces)
 		.on("click", function(e) {
-			getInfo(e.target.options.infoTag)
+			getInfo(e.target.options.infoTag);
 		});
     }
 
@@ -243,7 +254,22 @@
         showLon = person.lon;
         info.update(pos);
         showLatLon();
+
+		popup
+			.setLatLng(e.latlng)
+			.setContent(person.value)
+			.openOn(map);
     }
+
+	function arrayOfTabs() {
+		/*
+		obj = {
+			a: ['Adam Adams', 'Al Bert', 'A.C.'],
+			b: []
+		}
+		<Button id="tab-a">
+		*/
+	}
 
 	function addButton(pos) {
 		var person = participants[pos];
@@ -260,9 +286,8 @@
 	}
 
 	function offMap(_index) {
-		$("<span></span>", {
-			"class": "offMap",
-		}).text(participants[_index].value + "  ").appendTo("#listParticipantsMissing");
+		$('<li class="offMap">' + participants[_index].value + '</li>')
+			.prependTo('#listParticipantsMissing');
 	}
 
 	function addAutoComplete() {
@@ -274,8 +299,7 @@
 				showLatLon();
 			},
 			select: function(event, ui) {
-				getInfo(ui.item.id)
-
+				getInfo(ui.item.id);
 			}
 		});
 	}
@@ -310,9 +334,11 @@
 			tabs += '<div id="tabs-' + tabLetter + '"></div>';
         }
 
-		$("#tabLinks").append(list);
+		$("#tabLinks")
+			.append(list);
 
-		$("#tabs").append(tabs)
+		$("#tabs")
+			.append(tabs)
 			.tabs();
 	}
 
